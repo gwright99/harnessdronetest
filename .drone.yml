@@ -20,7 +20,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: default
+name: default2
 
 platform:
   arch: amd64
@@ -39,7 +39,7 @@ trigger:
 ---
 kind: pipeline
 type: docker
-name: default
+name: default3
 
 steps:
 - name: greeting
