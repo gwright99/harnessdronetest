@@ -1,0 +1,55 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+platform:
+  arch: amd64
+
+steps:
+- name: greeting
+  image: python:3.10-slim
+  commands:
+  - pip install -r requirements.txt
+  - python -m pip install requests
+
+trigger:
+  branch:
+  - master
+
+---
+kind: pipeline
+type: docker
+name: default
+
+platform:
+  arch: amd64
+
+steps:
+- name: greeting
+  image: python:3.9-slim
+  commands:
+  - pip install -r requirements.txt
+  - python -m pip install requests
+
+trigger:
+  branch:
+  - master
+
+---
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: greeting
+  image: python:3.8-slim
+  commands:
+  - pip install -r requirements.txt
+  - python -m pip install requests
+
+trigger:
+  event:
+  - pull_request
+  action:
+  - opened
