@@ -56,9 +56,11 @@ trigger:
 
 ---
 kind: pipeline
+type: exec
 name: default4
 
 platform:
+  os: linux
   arch: amd64
 
 steps:
