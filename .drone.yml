@@ -53,3 +53,19 @@ trigger:
   - pull_request
   action:
   - opened
+
+---
+kind: pipeline
+name: default4
+
+platform:
+  arch: amd64
+
+steps:
+- name: greeting
+  commands:
+  - cat /etc/os-release
+
+trigger:
+  branch:
+  - dev
