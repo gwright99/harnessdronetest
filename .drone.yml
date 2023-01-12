@@ -9,65 +9,69 @@ platform:
 steps:
 - name: greeting
   image: python:3.10-slim
+  environment:
+    TOKEN:
+      from_secret: Tower_Token
   commands:
-  - pip install -r requirements.txt
-  - python -m pip install requests
+  - pip install httpx
+  - python3 test_tower_label_limit2.py --action create --token $TOKEN
 
+# https://stackoverflow.com/questions/39577940/drone-io-filter-by-tag-name
 trigger:
-  branch:
-  - main
+  event: tag
+  branch: refs/tags/create
 
----
-kind: pipeline
-type: docker
-name: default2
+# ---
+# kind: pipeline
+# type: docker
+# name: labeltest
 
-platform:
-  arch: amd64
+# platform:
+#   arch: amd64
 
-steps:
-- name: greeting
-  image: python:3.9-slim
-  commands:
-  - pip install -r requirements.txt
-  - python -m pip install requests
+# steps:
+# - name: greeting
+#   image: python:3.9-slim
+#   commands:
+#   - pip install httpx
+#   - python -m pip install requests
 
-trigger:
-  branch:
-  - main
+# trigger:
+#   branch:
+#   - main
 
----
-kind: pipeline
-type: docker
-name: default3
+# ---
+# kind: pipeline
+# type: docker
+# name: default3
 
-steps:
-- name: greeting
-  image: python:3.8-slim
-  commands:
-  - pip install -r requirements.txt
-  - python -m pip install requests
+# steps:
+# - name: greeting
+#   image: python:3.8-slim
+#   commands:
+#   - pip install -r requirements.txt
+#   - python -m pip install requests
 
-trigger:
-  event:
-  - pull_request
-  action:
-  - opened
+# trigger:
+#   event:
+#   - pull_request
+#   action:
+#   - opened
 
----
-kind: pipeline
-type: exec
-name: default4
+# ---
+# kind: pipeline
+# type: exec
+# name: default4
 
-platform:
-  os: linux
-  arch: amd64
+# platform:
+#   os: linux
+#   arch: amd64
 
-steps:
-- name: greeting
-  commands:
-  - cat /etc/os-release
+# steps:
+# - name: greeting
+#   commands:
+#   - cat /etc/os-release
 
-trigger:
-  branch:
-  - dev
+# trigger:
+#   branch:
+#   - dev
