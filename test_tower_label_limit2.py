@@ -7,7 +7,7 @@ parser.add_argument("--token", help="Tower PAT token")
 
 # tower_token = "YOUR_TOWER_TOKEN"
 tower_base_url = "dc.seqera.grahamwright.net"
-tower_workspace_id = "41611254827065"
+tower_workspace_id = "66352837741840"
 
 
 
