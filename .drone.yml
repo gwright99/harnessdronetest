@@ -16,6 +16,9 @@ steps:
 - name: greeting
   image: python:3.10-slim
   commands:
+  - pip install httpx
+  - ls -al
+  - env 
   - echo "${DRONE_COMMIT_MESSAGE}"
 
 
