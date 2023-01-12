@@ -6,13 +6,15 @@ name: default
 platform:
   arch: amd64
 
+environment:
+  TOKEN:
+    from_secret: Tower_Token
+  DRONE_COMMIT_MESSAGE: "${DRONE_COMMIT_MESSAGE}"
+
 steps:
 - name: greeting
   image: python:3.10-slim
-  environment:
-    # TOKEN:
-    #   from_secret: Tower_Token
-    DRONE_COMMIT_MESSAGE: "${DRONE_COMMIT_MESSAGE}""
+  
   commands:
   - pip install httpx
   - ls -al
