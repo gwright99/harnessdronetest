@@ -15,13 +15,26 @@ steps:
   commands:
   - pip install httpx
   - ls -al
-  - python3 test_tower_label_limit2.py --action create --token $TOKEN
+  - |
+    if [[ "$DRONE_COMMIT_MESSAGE" = '[CREATE]' ]]; then
+      echo 'Commit message includes [CREATE]'
+      python3 test_tower_label_limit2.py --action create --token $TOKEN
+    fi
+  - |
+    if [[ "$DRONE_COMMIT_MESSAGE" = '[DELETE]' ]]; then
+      echo 'Commit message includes [DELETE]'
+      python3 test_tower_label_limit2.py --action delete --token $TOKEN
+    fi
+  
+  when:
+    branch:
+      - labeltest
 
 # https://stackoverflow.com/questions/39577940/drone-io-filter-by-tag-name
-trigger:
-  when:
-    event: tag
-    branch: refs/tags/create*
+# trigger:
+#   when:
+#     event: tag
+#     branch: refs/tags/create*
 
 # ---
 # kind: pipeline
