@@ -22,6 +22,7 @@ steps:
   - pip install httpx
   - ls -al
   - env
+  - export DRONE_COMMIT_MESSAGE=$${DRONE_COMMIT_MESSAGE}
   - echo DRONE_COMMIT_MESSAGE is: $DRONE_COMMIT_MESSAGE
   - |
     if [ $DRONE_COMMIT_MESSAGE = '[CREATE]' ]; then
