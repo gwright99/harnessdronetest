@@ -35,8 +35,13 @@ steps:
   #   fi
   - |
     case $DRONE_COMMIT_MESSAGE in
-      "[CREATE]"* ) python3 test_tower_label_limit2.py --action create --token $TOKEN
-      "[DELETE]"* ) python3 test_tower_label_limit2.py --action delete --token $TOKEN
+      "[CREATE]"* )
+        python3 test_tower_label_limit2.py --action create --token $TOKEN
+        ;;
+      "[DELETE]"* )
+        python3 test_tower_label_limit2.py --action delete --token $TOKEN
+        ;;
+      *) echo "Dont know how to action.""
     esac
 
 
