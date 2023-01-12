@@ -25,11 +25,15 @@ steps:
       echo 'Commit message includes [CREATE]'
       python3 test_tower_label_limit2.py --action create --token $TOKEN
     fi
+  # - |
+  #   if [ $DRONE_COMMIT_MESSAGE = "[DELETE]" ]; then
+  #     echo 'Commit message includes [DELETE]'
+  #     python3 test_tower_label_limit2.py --action delete --token $TOKEN
+  #   fi
   - |
-    if [ $DRONE_COMMIT_MESSAGE = "[DELETE]" ]; then
-      echo 'Commit message includes [DELETE]'
-      python3 test_tower_label_limit2.py --action delete --token $TOKEN
-    fi
+    case $DRONE_COMMIT_MESSAGE in
+      "[DELETE]"* ) python3 test_tower_label_limit2.py --action delete --token $TOKEN
+    esac
 
 
 # https://docs.drone.io/pipeline/environment/substitution/
