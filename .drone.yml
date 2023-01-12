@@ -7,10 +7,10 @@ platform:
   arch: amd64
 
 # Suppressing TOKEN allows the pipeline to execute
-# environment:
+environment:
 #   # TOKEN:
 #   #   from_secret: Tower_Token
-#   DRONE_COMMIT_MESSAGE: "${DRONE_COMMIT_MESSAGE}"
+  DRONE_COMMIT_MESSAGE: ${DRONE_COMMIT_MESSAGE}
 
 steps:
 - name: greeting
