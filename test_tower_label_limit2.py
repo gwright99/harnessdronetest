@@ -9,7 +9,7 @@ parser.add_argument("--token", help="Tower PAT token")
 tower_base_url = "dc.seqera.grahamwright.net"
 tower_workspace_id = "66352837741840"
 
-# Some comment
+# Some comment1
 
 # JSON Payload to create a label.
 create_label_data = {
