@@ -19,7 +19,7 @@ steps:
 # https://stackoverflow.com/questions/39577940/drone-io-filter-by-tag-name
 trigger:
   event: tag
-  branch: refs/tags/create
+  branch: refs/tags/create*
 
 # ---
 # kind: pipeline
