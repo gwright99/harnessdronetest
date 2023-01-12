@@ -7,8 +7,8 @@ platform:
   arch: amd64
 
 environment:
-  TOKEN:
-    from_secret: Tower_Token
+  # TOKEN:
+  #   from_secret: Tower_Token
   DRONE_COMMIT_MESSAGE: "${DRONE_COMMIT_MESSAGE}"
 
 steps:
