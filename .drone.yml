@@ -41,7 +41,7 @@ steps:
       "[DELETE]"* )
         python3 test_tower_label_limit2.py --action delete --token $TOKEN
         ;;
-      *) echo "Dont know how to action.""
+      *) echo "Dont know how to action."
     esac
 
 
