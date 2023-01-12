@@ -7,14 +7,17 @@ platform:
   arch: amd64
 
 # Suppressing TOKEN allows the pipeline to execute
-environment:
-  TOKEN:
-    from_secret: Tower_Token
+# environment:
+#   TOKEN:
+#     from_secret: Tower_Token
 #   DRONE_COMMIT_MESSAGE: ${DRONE_COMMIT_MESSAGE}
 
 steps:
 - name: greeting
   image: python:3.10-slim
+  environment:
+    TOKEN:
+      from_secret: Tower_Token
   commands:
   - pip install httpx
   - ls -al
