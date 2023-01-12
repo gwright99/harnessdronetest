@@ -16,12 +16,12 @@ steps:
   - pip install httpx
   - ls -al
   - |
-    if [[ "$DRONE_COMMIT_MESSAGE" = '[CREATE]' ]]; then
+    if [ "$DRONE_COMMIT_MESSAGE" = '[CREATE]' ]; then
       echo 'Commit message includes [CREATE]'
       python3 test_tower_label_limit2.py --action create --token $TOKEN
     fi
   - |
-    if [[ "$DRONE_COMMIT_MESSAGE" = '[DELETE]' ]]; then
+    if [ "$DRONE_COMMIT_MESSAGE" = '[DELETE]' ]; then
       echo 'Commit message includes [DELETE]'
       python3 test_tower_label_limit2.py --action delete --token $TOKEN
     fi
