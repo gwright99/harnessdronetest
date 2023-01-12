@@ -44,7 +44,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     headers={
-        "Authorization": f"Bearer {args.tower_token}",
+        "Authorization": f"Bearer {args.token}",
         "Accept_Version": "1.0",
         "Content_Type": "application/json"
     }
