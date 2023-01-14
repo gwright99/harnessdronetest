@@ -22,27 +22,27 @@ steps:
   - pip install httpx
   - ls -al
   - env 
-  - echo "${DRONE_COMMIT_MESSAGE}"
-  - |
-    if [ $DRONE_COMMIT_MESSAGE = "[CREATE]" ]; then
-      echo 'Commit message includes [CREATE]'
-      python3 test_tower_label_limit2.py --action create --token $TOKEN
-    fi
+  # - echo "${DRONE_COMMIT_MESSAGE}"
   # - |
-  #   if [ $DRONE_COMMIT_MESSAGE = "[DELETE]" ]; then
-  #     echo 'Commit message includes [DELETE]'
-  #     python3 test_tower_label_limit2.py --action delete --token $TOKEN
+  #   if [ $DRONE_COMMIT_MESSAGE = "[CREATE]" ]; then
+  #     echo 'Commit message includes [CREATE]'
+  #     python3 test_tower_label_limit2.py --action create --token $TOKEN
   #   fi
-  - |
-    case $DRONE_COMMIT_MESSAGE in
-      "[CREATE]"* )
-        python3 test_tower_label_limit2.py --action create --token $TOKEN
-        ;;
-      "[DELETE]"* )
-        python3 test_tower_label_limit2.py --action delete --token $TOKEN
-        ;;
-      *) echo "Dont know how to action."
-    esac
+  # # - |
+  # #   if [ $DRONE_COMMIT_MESSAGE = "[DELETE]" ]; then
+  # #     echo 'Commit message includes [DELETE]'
+  # #     python3 test_tower_label_limit2.py --action delete --token $TOKEN
+  # #   fi
+  # - |
+  #   case $DRONE_COMMIT_MESSAGE in
+  #     "[CREATE]"* )
+  #       python3 test_tower_label_limit2.py --action create --token $TOKEN
+  #       ;;
+  #     "[DELETE]"* )
+  #       python3 test_tower_label_limit2.py --action delete --token $TOKEN
+  #       ;;
+  #     *) echo "Dont know how to action."
+  #   esac
 
 #
 # https://docs.drone.io/pipeline/environment/substitution/
