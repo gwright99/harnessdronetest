@@ -19,9 +19,9 @@ steps:
     TOKEN:
       from_secret: Tower_Token
   commands:
-  - pip install httpx
   - ls -al
   - env 
+  # - pip install httpx
   # - echo "${DRONE_COMMIT_MESSAGE}"
   # - |
   #   if [ $DRONE_COMMIT_MESSAGE = "[CREATE]" ]; then
