@@ -1,55 +1,204 @@
 ---
 kind: pipeline
 type: docker
-name: default
+name: build
 
 platform:
   arch: amd64
+
+# Suppressing TOKEN allows the pipeline to execute
+# environment:
+#   TOKEN:
+#     from_secret: Tower_Token
+#   DRONE_COMMIT_MESSAGE: ${DRONE_COMMIT_MESSAGE}
 
 steps:
 - name: greeting
   image: python:3.10-slim
+  environment:
+    TOKEN:
+      from_secret: Tower_Token
+    CRED:
+      from_secret: CRED
   commands:
-  - pip install -r requirements.txt
-  - python -m pip install requests
+  - ls -al
+  - env 
+  - pip install httpx
+  - echo "$CRED"
+  # Complicated to pass JSON via CICD controller secret to BASH 
+  # environment variable. Better to write to Secret as base64-encoded
+  # value and then decode in the script.
+  # NOTE: Trying to break this over multiple lines seems to fail
+  - python3 create_workspace.py --token $TOKEN --wsname $WSNAME --useremail $USEREMAIL --b64credential $CRED
+  # TO REVERT, DELETE THIS and enable root trigger ~59
+  when:
+    event:
+      exclude:
+      - push
+      - promote
+    branch:
+      include:
+      - autopopulatews
+      exclude:
+      - master
 
-trigger:
-  branch:
-  - main
-
----
-kind: pipeline
-type: docker
-name: default2
-
-platform:
-  arch: amd64
-
-steps:
-- name: greeting
-  image: python:3.9-slim
+- name: promote_to_staging
+  image: python:3.10-slim
+  environment:
+    TOKEN:
+      from_secret: Tower_Token
+    CRED:
+      from_secret: CRED
   commands:
-  - pip install -r requirements.txt
-  - python -m pip install requests
+  - ls -al
+  - env 
+  - pip install httpx
+  # There's definitely some finicky syntax here. Result in Drone console for the steps below:
+  #       + echo "$CRED"
+  #       ******
+  #       + echo ${WSNAME}
+  #       ABCDF
+  #       + env | grep WSNAME
+  #       WSNAME=ABCDF
+  #       + echo $WSNAME
+  #       ABCDEF
+  # But if I try to echo envvar in the string, constant failures. 
+  # (!) General rule: If you are going to echo a variable in the pipeline,
+  # split normal text from the variable.
+  - echo "$CRED"
+  # - echo 'WSPNAME is: $${WSNAME}'
+  - echo $${WSNAME}
+  - echo $WSNAME
+  # - echo This is the promotion pipeline.
+  # "${WSNAME}" gets error 'yaml: line 10: did not find expected key'.
+  # - echo WSNAME from dev pipeline is: $WSNAME
+  # It appears that 'echo' is the problem, but I don't know why.
+  # If I try using: echo print out $WSNAME, I get errors constantly.
+  # But if I replace the echo command with a python command that uses $WSNAME, everything is fine.
+  # What's wrong with echo?
+  - env | grep WSNAME
+  - python3 create_workspace.py --token $TOKEN --wsname $WSNAME --useremail $USEREMAIL --b64credential $CRED
 
-trigger:
-  branch:
-  - main
+  # - echo USEREMAIL from dev pipeline is: "$USEREMAIL".
+  when:
+    event:
+      include:
+      - promote
+    target:
+    - staging
 
----
-kind: pipeline
-type: docker
-name: default3
+# trigger:
+#   event:
+#     exclude:
+#     - push
+#   branch:
+#     include:
+#     - autopopulatews
+#     exclude:
+#     - master
 
-steps:
-- name: greeting
-  image: python:3.8-slim
-  commands:
-  - pip install -r requirements.txt
-  - python -m pip install requests
+# ---
+# kind: pipeline
+# type: docker
+# name: promote_to_staging
 
-trigger:
-  event:
-  - pull_request
-  action:
-  - opened
+# steps:
+# - name: echo
+#   image: python:3.10-slim
+#   commands:
+#   - env
+#   # - echo This is the promotion pipeline.
+#   # "${WSNAME}" gets error 'yaml: line 10: did not find expected key'.
+#   - echo WSNAME from dev pipeline is: "${WSNAME}".
+#   # - echo USEREMAIL from dev pipeline is: "$USEREMAIL".
+
+# trigger:
+#   event:
+#     include:
+#     - promote
+#   target:
+#   - staging
+
+  
+  # - |
+  #   if [ $DRONE_COMMIT_MESSAGE = "[CREATE]" ]; then
+  #     echo 'Commit message includes [CREATE]'
+  #     python3 test_tower_label_limit2.py --action create --token $TOKEN
+  #   fi
+
+  # - |
+  #   case $DRONE_COMMIT_MESSAGE in
+  #     "[CREATE]"* )
+  #       python3 test_tower_label_limit2.py --action create --token $TOKEN
+  #       ;;
+  #     "[DELETE]"* )
+  #       python3 test_tower_label_limit2.py --action delete --token $TOKEN
+  #       ;;
+  #     *) echo "Dont know how to action."
+  #   esac
+
+  # Comment out since I only want to manually trigger
+  # when:
+  #   branch:
+  #     - autopopulatews
+
+# https://stackoverflow.com/questions/39577940/drone-io-filter-by-tag-name
+# trigger:
+#   when:
+#     event: tag
+#     branch: refs/tags/create*
+
+# ---
+# kind: pipeline
+# type: docker
+# name: labeltest
+
+# platform:
+#   arch: amd64
+
+# steps:
+# - name: greeting
+#   image: python:3.9-slim
+#   commands:
+#   - pip install httpx
+#   - python -m pip install requests
+
+# trigger:
+#   branch:
+#   - main
+
+# ---
+# kind: pipeline
+# type: docker
+# name: default3
+
+# steps:
+# - name: greeting
+#   image: python:3.8-slim
+#   commands:
+#   - pip install -r requirements.txt
+#   - python -m pip install requests
+
+# trigger:
+#   event:
+#   - pull_request
+#   action:
+#   - opened
+
+# ---
+# kind: pipeline
+# type: exec
+# name: default4
+
+# platform:
+#   os: linux
+#   arch: amd64
+
+# steps:
+# - name: greeting
+#   commands:
+#   - cat /etc/os-release
+
+# trigger:
+#   branch:
+#   - dev
