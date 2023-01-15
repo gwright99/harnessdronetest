@@ -30,6 +30,15 @@ steps:
   # value and then decode in the script.
   # NOTE: Trying to break this over multiple lines seems to fail
   - python3 create_workspace.py --token $TOKEN --wsname $WSNAME --useremail $USEREMAIL --b64credential $CRED
+  when:
+    event:
+      exclude:
+      - push
+    branch:
+      include:
+      - autopopulatews
+      exclude:
+      - master
 
 - name: promote_to_staging
   image: python:3.10-slim
@@ -39,23 +48,22 @@ steps:
   # "${WSNAME}" gets error 'yaml: line 10: did not find expected key'.
   - echo WSNAME from dev pipeline is: $WSNAME.
   # - echo USEREMAIL from dev pipeline is: "$USEREMAIL".
+  when:
+    event:
+      include:
+      - promote
+    target:
+    - staging
 
-trigger:
-  event:
-    include:
-    - promote
-  target:
-  - staging
-
-trigger:
-  event:
-    exclude:
-    - push
-  branch:
-    include:
-    - autopopulatews
-    exclude:
-    - master
+# trigger:
+#   event:
+#     exclude:
+#     - push
+#   branch:
+#     include:
+#     - autopopulatews
+#     exclude:
+#     - master
 
 # ---
 # kind: pipeline
