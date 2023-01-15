@@ -35,6 +35,7 @@ steps:
     event:
       exclude:
       - push
+      - promote
     branch:
       include:
       - autopopulatews
@@ -44,10 +45,18 @@ steps:
 - name: promote_to_staging
   image: python:3.10-slim
   commands:
-  - env
+  - ls -al
+  - env 
+  - pip install httpx
+  - echo "$CRED"
   # - echo This is the promotion pipeline.
   # "${WSNAME}" gets error 'yaml: line 10: did not find expected key'.
   # - echo WSNAME from dev pipeline is: $WSNAME
+  # It appears that 'echo' is the problem, but I don't know why.
+  # If I try using: echo print out $WSNAME, I get errors constantly.
+  # But if I replace the echo command with a python command that uses $WSNAME, everything is fine.
+  # What's wrong with echo?
+  - env | grep WSNAME
   - python3 create_workspace.py --token $TOKEN --wsname $WSNAME --useremail $USEREMAIL --b64credential $CRED
 
   # - echo USEREMAIL from dev pipeline is: "$USEREMAIL".
