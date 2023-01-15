@@ -29,9 +29,7 @@ steps:
   # Complicated to pass JSON via CICD controller secret to BASH 
   # environment variable. Better to write to Secret as base64-encoded
   # value and then decode in the script.
-  - python3 create_workspace.py \
-      --token $TOKEN \
-      --wsname $WSNAME \
+  - python3 create_workspace.py --token $TOKEN --wsname $WSNAME \
       --useremail $USEREMAIL \
       --b64credential $CRED
 
