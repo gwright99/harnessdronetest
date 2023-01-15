@@ -54,7 +54,7 @@ steps:
   - env 
   - pip install httpx
   - echo "$CRED"
-  - echo 'WSPNAME is:'' 
+  - echo 'WSPNAME is:'
   - echo $${WSNAME}
   # - echo This is the promotion pipeline.
   # "${WSNAME}" gets error 'yaml: line 10: did not find expected key'.
