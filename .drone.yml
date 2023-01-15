@@ -24,7 +24,7 @@ steps:
   - ls -al
   - env 
   - pip install httpx
-  - apt-get install -y jq
+  - apt-get update && apt-get install -y jq
   - credential=$(echo CRED | jq .)
   - echo $credential
   - python3 create_workspace.py \
