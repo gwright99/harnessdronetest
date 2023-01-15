@@ -81,8 +81,15 @@ if __name__ == '__main__':
     print(resp.status_code)
 
     # Create Credentials
+    # Credential B64 was created by pasting the json object into a file, then
+    # piping the file through base64 on the Linux CLI:
+    # > cat key.json | base64 | tr -d \\n
+    # This means that when the credential is decoded, it is a byte string, NOT 
+    # json object. 
     url = f"https://{tower_base_url}/api/credentials?workspaceId={workspace_id}"
     credential = base64.b64decode(args.b64credential)
+    credential = json.loads(credential)
+    
     print(credential)
     print(type(credential))
     payload = {
