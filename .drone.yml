@@ -32,7 +32,7 @@ steps:
       --token $TOKEN \
       --wsname $WSNAME \
       --useremail $USEREMAIL \
-      --b64credential $credential
+      --b64credential $CRED
 
   # - |
   #   if [ $DRONE_COMMIT_MESSAGE = "[CREATE]" ]; then
