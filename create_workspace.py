@@ -83,6 +83,8 @@ if __name__ == '__main__':
     # Create Credentials
     url = f"https://{tower_base_url}/api/credentials?workspaceId={workspace_id}"
     credential = base64.b64decode(args.b64credential)
+    print(credential)
+    print(type(credential))
     payload = {
         "credentials": {
             "name": "GoogleTest",
