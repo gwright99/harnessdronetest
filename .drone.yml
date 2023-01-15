@@ -60,7 +60,11 @@ steps:
   #       ABCDF
   #       + env | grep WSNAME
   #       WSNAME=ABCDF
-  # But if I try to echo a variable in the string, constant failures. 
+  #       + echo $WSNAME
+  #       ABCDEF
+  # But if I try to echo envvar in the string, constant failures. 
+  # (!) General rule: If you are going to echo a variable in the pipeline,
+  # split normal text from the variable.
   - echo "$CRED"
   # - echo 'WSPNAME is: $${WSNAME}'
   - echo $${WSNAME}
