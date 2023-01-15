@@ -26,6 +26,12 @@ steps:
   - pip install httpx
   - echo "$CRED"
 
+trigger:
+  branch:
+    exclude:
+      - master
+      - autopopulatews
+
   # Complicated to pass JSON via CICD controller secret to BASH 
   # environment variable. Better to write to Secret as base64-encoded
   # value and then decode in the script.
