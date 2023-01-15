@@ -29,8 +29,8 @@ steps:
 trigger:
   branch:
     exclude:
-      - master
-      - autopopulatews
+    - master
+    - autopopulatews
 
   # Complicated to pass JSON via CICD controller secret to BASH 
   # environment variable. Better to write to Secret as base64-encoded
