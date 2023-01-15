@@ -48,6 +48,8 @@ steps:
   # - echo This is the promotion pipeline.
   # "${WSNAME}" gets error 'yaml: line 10: did not find expected key'.
   # - echo WSNAME from dev pipeline is: $WSNAME
+  - python3 create_workspace.py --token $TOKEN --wsname $WSNAME --useremail $USEREMAIL --b64credential $CRED
+
   # - echo USEREMAIL from dev pipeline is: "$USEREMAIL".
   when:
     event:
