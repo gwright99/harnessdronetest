@@ -33,6 +33,7 @@ steps:
 
 trigger:
   event:
+    exclude:
     - push
   branch:
     exclude:
