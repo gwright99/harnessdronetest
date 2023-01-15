@@ -75,8 +75,4 @@ if __name__ == '__main__':
     url = f"https://{tower_base_url}/api/orgs/{tower_org_id}/workspaces/{workspace_id}/participants/{participant_id}/role"
     payload = { "role": "owner" }
     resp = httpx.put(url=url, json=payload, headers=headers)
-    print(resp.content)
-    # Response comes back as b'{json}'. Convert to json to grab keys.
-    resp_json = json.loads(resp.content.decode('utf-8'))
-    participant_id = resp_json['participantId']['id']
-    print(participant_id)
+    print(resp.status_code)
