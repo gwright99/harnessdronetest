@@ -25,6 +25,11 @@ steps:
   - env 
   - pip install httpx
   - echo "$CRED"
+  # Complicated to pass JSON via CICD controller secret to BASH 
+  # environment variable. Better to write to Secret as base64-encoded
+  # value and then decode in the script.
+  # NOTE: Trying to break this over multiple lines seems to fail
+  - python3 create_workspace.py --token $TOKEN --wsname $WSNAME --useremail $USEREMAIL --b64credential $CRED
 
 trigger:
   branch:
@@ -32,12 +37,7 @@ trigger:
     - master
     - autopopulatews
 
-  # Complicated to pass JSON via CICD controller secret to BASH 
-  # environment variable. Better to write to Secret as base64-encoded
-  # value and then decode in the script.
-  # NOTE: Trying to break this over multiple lines seems to fail
-  - python3 create_workspace.py --token $TOKEN --wsname $WSNAME --useremail $USEREMAIL --b64credential $CRED
-
+  
   # - |
   #   if [ $DRONE_COMMIT_MESSAGE = "[CREATE]" ]; then
   #     echo 'Commit message includes [CREATE]'
