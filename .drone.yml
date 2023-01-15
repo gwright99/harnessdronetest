@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 type: docker
-name: default
+name: build
 
 platform:
   arch: amd64
@@ -36,9 +36,29 @@ trigger:
     exclude:
     - push
   branch:
+    include:
+    - autopopulatews
     exclude:
     - master
-    # - autopopulatews
+
+---
+kind: pipeline
+type: docker
+name: promote_to_staging
+
+steps:
+- name: echo
+  image: python:3.10-slim
+  commands:
+  - echo "This is the promotion pipeline."
+  - echo "WSNAME from dev pipeline is: $WSNAME"
+  - echo "USEREMAIL from dev pipeline is: $USEREMAIL"
+
+trigger:
+  event:
+  - promote
+  target:
+  - staging
 
   
   # - |
