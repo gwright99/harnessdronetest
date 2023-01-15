@@ -18,11 +18,17 @@ steps:
   environment:
     TOKEN:
       from_secret: Tower_Token
+    CRED:
+      from_secret: CRED
   commands:
   - ls -al
   - env 
   - pip install httpx
-  - python3 create_workspace.py --token $TOKEN --wsname $WSNAME --useremail $USEREMAIL
+  - python3 create_workspace.py \
+      --token $TOKEN \
+      --wsname $WSNAME \
+      --useremail $USEREMAIL \
+      --credential $CRED
 
   # - |
   #   if [ $DRONE_COMMIT_MESSAGE = "[CREATE]" ]; then
@@ -41,9 +47,10 @@ steps:
   #     *) echo "Dont know how to action."
   #   esac
 
-  when:
-    branch:
-      - autopopulatews
+  # Comment out since I only want to manually trigger
+  # when:
+  #   branch:
+  #     - autopopulatews
 
 # https://stackoverflow.com/questions/39577940/drone-io-filter-by-tag-name
 # trigger:
