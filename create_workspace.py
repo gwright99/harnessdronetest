@@ -34,7 +34,7 @@ if __name__ == '__main__':
     Fill this out later with usage details.
     '''
 
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
     print(args.b64credential)
 
     headers={
