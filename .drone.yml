@@ -37,7 +37,7 @@ trigger:
   branch:
     exclude:
     - master
-    - autopopulatews
+    # - autopopulatews
 
   
   # - |
