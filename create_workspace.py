@@ -1,4 +1,4 @@
-import httpx
+# import httpx
 import argparse
 import json
 import base64
@@ -35,6 +35,7 @@ if __name__ == '__main__':
     '''
 
     args = parser.parse_args()
+    print(args.b64credential)
 
     headers={
         "Authorization": f"Bearer {args.token}",
