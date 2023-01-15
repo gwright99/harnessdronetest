@@ -52,7 +52,7 @@ steps:
   commands:
   - env
   # - echo This is the promotion pipeline.
-  - echo WSNAME from dev pipeline is: "$WSNAME".
+  - echo WSNAME from dev pipeline is: $WSNAME.
   # - echo USEREMAIL from dev pipeline is: "$USEREMAIL".
 
 trigger:
