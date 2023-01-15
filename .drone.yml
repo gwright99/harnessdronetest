@@ -24,11 +24,13 @@ steps:
   - ls -al
   - env 
   - pip install httpx
+  - credential=$(echo CRED | jq .)
+  - echo $credential
   - python3 create_workspace.py \
       --token $TOKEN \
       --wsname $WSNAME \
       --useremail $USEREMAIL \
-      --credential $CRED
+      --credential $credential
 
   # - |
   #   if [ $DRONE_COMMIT_MESSAGE = "[CREATE]" ]; then
