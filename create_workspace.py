@@ -35,6 +35,9 @@ if __name__ == '__main__':
     '''
 
     args, unknown = parser.parse_known_args()
+    print(args.token)
+    print(args.wsname)
+    print(args.useremail)
     print(args.b64credential)
 
     headers={
