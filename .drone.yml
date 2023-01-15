@@ -44,6 +44,11 @@ steps:
 
 - name: promote_to_staging
   image: python:3.10-slim
+  environment:
+    TOKEN:
+      from_secret: Tower_Token
+    CRED:
+      from_secret: CRED
   commands:
   - ls -al
   - env 
