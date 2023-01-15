@@ -50,9 +50,9 @@ steps:
 - name: echo
   image: python:3.10-slim
   commands:
-  - echo "This is the promotion pipeline."
-  - echo "WSNAME from dev pipeline is: ${WSNAME}"
-  - echo "USEREMAIL from dev pipeline is: ${USEREMAIL}"
+  - echo 'This is the promotion pipeline.'
+  - echo 'WSNAME from dev pipeline is: "WSNAME}"'
+  - echo 'USEREMAIL from dev pipeline is: "${USEREMAIL}"'
 
 trigger:
   event:
