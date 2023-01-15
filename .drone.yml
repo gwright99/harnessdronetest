@@ -24,14 +24,15 @@ steps:
   - ls -al
   - env 
   - pip install httpx
-  - apt-get update && apt-get install -y jq
-  - credential=$(echo CRED | jq .)
-  - echo $credential
+
+  # Complicated to pass JSON via CICD controller secret to BASH 
+  # environment variable. Better to write to Secret as base64-encoded
+  # value and then decode in the script.
   - python3 create_workspace.py \
       --token $TOKEN \
       --wsname $WSNAME \
       --useremail $USEREMAIL \
-      --credential $credential
+      --b64credential $credential
 
   # - |
   #   if [ $DRONE_COMMIT_MESSAGE = "[CREATE]" ]; then

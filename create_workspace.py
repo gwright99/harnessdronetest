@@ -1,13 +1,14 @@
 import httpx
 import argparse
 import json
+import base64
 
 parser  = argparse.ArgumentParser(description='Test Nextflow Tower Label limit (default 100)')
 # parser.add_argument("--action", help="Specify `create` or `delete`")
 parser.add_argument("--token", help="Tower PAT token")
 parser.add_argument("--wsname", help="Name of workspace")
 parser.add_argument("--useremail", help="Email of user to add")
-parser.add_argument("--credential", help="The secret credential")
+parser.add_argument("--b64credential", help="The secret credential")
 
 # tower_token = "YOUR_TOWER_TOKEN"
 tower_base_url = "dc.seqera.grahamwright.net"
@@ -77,13 +78,14 @@ if __name__ == '__main__':
 
     # Create Credentials
     url = f"https://{tower_base_url}/api/credentials?workspaceId={workspace_id}"
+    credential = base64.b64decode(args.b64credential)
     payload = {
         "credentials": {
             "name": "GoogleTest",
             "provider": "google",
             "keys": {
                 # "data": json.dumps(google_json_file)  # Must be string
-                "data": json.dump(args.credential)
+                "data": credential
             }
         }
     }
