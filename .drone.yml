@@ -53,9 +53,18 @@ steps:
   - ls -al
   - env 
   - pip install httpx
+  # There's definitely some finicky syntax here. Result in Drone console for the steps below:
+  #       + echo "$CRED"
+  #       ******
+  #       + echo ${WSNAME}
+  #       ABCDF
+  #       + env | grep WSNAME
+  #       WSNAME=ABCDF
+  # But if I try to echo a variable in the string, constant failures. 
   - echo "$CRED"
   # - echo 'WSPNAME is: $${WSNAME}'
   - echo $${WSNAME}
+  - echo $WSNAME
   # - echo This is the promotion pipeline.
   # "${WSNAME}" gets error 'yaml: line 10: did not find expected key'.
   # - echo WSNAME from dev pipeline is: $WSNAME
