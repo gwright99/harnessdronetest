@@ -32,6 +32,8 @@ steps:
   - python3 create_workspace.py --token $TOKEN --wsname $WSNAME --useremail $USEREMAIL --b64credential $CRED
 
 trigger:
+  event:
+    - push
   branch:
     exclude:
     - master
