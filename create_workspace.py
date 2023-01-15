@@ -85,11 +85,12 @@ if __name__ == '__main__':
     # piping the file through base64 on the Linux CLI:
     # > cat key.json | base64 | tr -d \\n
     # This means that when the credential is decoded, it is a byte string, NOT 
-    # json object. 
+    # json object. Convert the byte string to a dict, then dump the dict as
+    # stringified json (so I will be accepted by the Tower API). 
     url = f"https://{tower_base_url}/api/credentials?workspaceId={workspace_id}"
     credential = base64.b64decode(args.b64credential)
     credential = json.loads(credential)
-    
+
     print(credential)
     print(type(credential))
     payload = {
@@ -98,7 +99,7 @@ if __name__ == '__main__':
             "provider": "google",
             "keys": {
                 # "data": json.dumps(google_json_file)  # Must be string
-                "data": credential
+                "data": json.dumps(credential)
             }
         }
     }
