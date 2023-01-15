@@ -46,7 +46,7 @@ steps:
   - env
   # - echo This is the promotion pipeline.
   # "${WSNAME}" gets error 'yaml: line 10: did not find expected key'.
-  - echo WSNAME from dev pipeline is: $WSNAME .
+  - echo WSNAME from dev pipeline is: $WSNAME
   # - echo USEREMAIL from dev pipeline is: "$USEREMAIL".
   when:
     event:
